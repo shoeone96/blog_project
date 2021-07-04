@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <title>행해 갤러리</title>
+
+
+    <style>
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        .width {
+            width: 1200px;
+            margin: auto;
+        }
+
+        .jumbotron {
+            width: 1200px;
+            margin: auto;
+        }
+
+        .title {
+            margin-bottom: 20px;
+        }
+
+
+        .titleWidth {
+            width: 800px;
+        }
+
+        .usernameWidth {
+            width: 250px;
+        }
+
+        .modifiedAtWidth {
+            width: 200px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */
+        }
+        .banner{
+            align-content: center;
+        }
+        .btnPosting{
+            margin-top: 50px;
+        }
+        .jumbotron {
+            margin: auto;
+            height: 300px;
+        }
+        .bannerword{
+            text-align: center;
+            font-size: 80px;
+            font-family: 'Jua', sans-serif;
+        }
+    </style>
+    <script>
+        function essay(id) {
+            $('#myModal').show();
+            $.ajax({
+                type: 'GET',
+                url: `/api/boards/${id}`,
+                success: function (response) {
+                    let id = response.id;
+                    let username = response.username;
+                    let title = response.title;
+                    let contents = response.contents;
+                    getId = response.id;
+                    detailHTML(id, username, title, contents)
+                }
+            })
+        }
+
+        function detailHTML(id, username, title, contents) {
+            let temphtml = `<div id="myModal" class="modal" xmlns="http://www.w3.org/1999/html">
+
+                                <div class="modal-content">
+                                   <table class="table table-striped width" id="detail">
+                                        <div class="card bg-light mb-3 detailCards" style="max-width: 60rem; max-height: 30rem;">
+                                            <div class="card-header"> ${title}       ${username}</div>
+                                            <div class="card-body">
+                                                <p class="card-text">${contents}</p>
+                                            </div>
+                                        </div>
+                                    </table>
+                                    <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="close_pop();">
+                                            <span class="pop_bt" style="font-size: 13pt;" >
+                                                 닫기
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>`
+            $('#body').append(temphtml);
+        }
+
+        $(document).ready(function () {
+
+            // HTML 문서를 로드할 때(새로고침 시)마다 실행합니다.
+            getMessages();
+        })
+
+        // 메모를 불러와서 보여줍니다.
+        function getMessages() {
+            // 1. 기존 메모 내용을 지웁니다.
+            $('#list').empty();
+            // 2. 메모 목록을 불러와서 HTML로 붙입니다.
+            $.ajax({
+                type: 'GET',
+                url: '/api/boards',
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        let board = response[i];
+                        let id = board.id;
+                        let title = board.title
+                        let username = board.username;
+                        let modifiedAt = board.modifiedAt.split('T')[0];
+                        addHTML(id, username, title, modifiedAt);
+                    }
+                }
+            })
+        }
+
+        function addHTML(id, username, title, modifiedAt) {
+            let temphtml = `<tr onclick="essay(${id})" id="goingDetail">
+                            <td class="modifiedAtWidth">${modifiedAt}</td>
+                            <td class="titleWidth">${title}</td>
+                            <td class="usernameWidth">${username}</td>
+                        </tr>`
+            $('#list').append(temphtml)
+        }
+
+        //팝업 Close 기능
+        function close_pop(flag) {
+            $('#myModal').hide();
+        };
+
+    </script>
+</head>
+<body id="body">
+<div class="jumbotron">
+    <h1 class="bannerword">항해 갤러리</h1>
+    <p class="lead">
+        <button class="btn btn-secondary btn-lg" onclick="location.href='posting.html';">게시글 작성하기</button>
+    </p>
+</div>
+<table class="table table-striped width">
+    <thead>
+    <tr>
+        <th class="modifiedAtWidth">작성날짜</th>
+        <th>제목</th>
+        <th>작성자</th>
+    </tr>
+    </thead>
+    <tbody id="list">
+    <tr onclick="essay()">
+        <td>번호</td>
+        <td>제목</td>
+        <td>작성자</td>
+        <td>번호</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posting.htm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        .entire {
+            width: 1200px;
+            margin: auto;
+            margin-top: 30px;
+            padding: 30px;
+        }
+
+        .field {
+            margin-top: 10px;
+        }
+
+        .entire {
+            border: 3px solid grey;
+        }
+
+        .jumbotron {
+            margin: auto;
+            height: 300px;
+        }
+        .bannerword{
+            text-align: center;
+            font-size: 80px;
+            font-family: 'Jua', sans-serif;
+        }
+    </style>
+    <script>
+        // 메모를 생성합니다.
+        function writePost() {
+            // 1. 작성한 메모를 불러옵니다.
+            let username = $('#username').val();
+            let title = $('#title').val();
+            // let subjects = $('#subjects').val();
+            let contents = $('#contents').val();
+
+            // 4. 전달할 data JSON으로 만듭니다.
+            let data = {'username': username, 'contents': contents, 'title': title}; //'subjects':subjects
+            // 5. POST /api/memos 에 data를 전달합니다.
+            $.ajax({
+                type: "POST",
+                url: "/api/boards",
+                contentType: "application/json",          // JSON 형식으로 전달함을 알리기(받고나서 잘 번역해라 - ARC에서 설정해줬던 부분)
+                data: JSON.stringify(data),               // String 밖에 받지 못하니 문자열로 전환해서 보내주는 형태(java에서 String 으로 잘 받겠지)
+                success: function (response) {            // 성공하면 아래의 매세지를 전달해주겠다
+                    alert('메시지가 성공적으로 작성되었습니다.');
+                    window.location.href = "/"             // 새로고침
+                }
+            });
+        }
+    </script>
+
+</head>
+<body>
+<body>
+<div class="jumbotron" >
+    <h1 class="bannerword">항해 갤러리</h1>
+</div>
+<table class="table table-striped width">
+    <thead>
+    <div class="entire">
+        <div class="field">
+            <label class="label">Username</label>
+            <input class="input" type="text" placeholder="Nickname" id="username">
+            <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+            <span class="icon is-small is-right">
+      <i class="fas fa-check"></i>
+    </span>
+        </div>
+
+        <div class="field">
+            <label class="label">Title</label>
+            <input class="input" type="text" placeholder="Title input" id="title">
+            <span class="icon is-small is-left">
+      <i class="fas fa-envelope"></i>
+    </span>
+            <span class="icon is-small is-right">
+      <i class="fas fa-exclamation-triangle"></i>
+    </span>
+        </div>
+
+        <div class="field">
+            <label class="label">Contents</label>
+            <div class="control">
+                <textarea class="textarea" placeholder="Contents" id="contents"></textarea>
+            </div>
+        </div>
+
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link" onclick="writePost()">Submit</button>
+            </div>
+            <div class="control">
+                <button class="button is-link is-light">Cancel</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

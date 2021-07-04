@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <style>
+        .detailCards {
+            width: 1200px;
+            height: 700px;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        .jumbotron {
+            margin: auto;
+            height: 300px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            // HTML 문서를 로드할 때(새로고침 시)마다 실행합니다.
+            detailing();
+        })
+
+        function detailing(id) {
+        }
+
+    </script>
+</head>
+<body>
+<div class="jumbotron" onclick=location.href='index.html'>
+    <h1 class="display-4 title">항해 블로그!</h1>
+</div>
+<table class="table table-striped width" id="detail">
+    <div class="card bg-light mb-3 detailCards" style="max-width: 60rem; max-height: 30rem;">
+        <div class="card-header">${title} ${username}</div>
+        <div class="card-body">
+            <p class="card-text">${contents}</p>
+        </div>
+    </div>
+</table>
+
+</body>
+</html>
