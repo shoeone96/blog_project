@@ -1,5 +1,6 @@
-package com.sparta.assignment.domain;
+package com.sparta.assignment.repository;
 
+import com.sparta.assignment.domain.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
