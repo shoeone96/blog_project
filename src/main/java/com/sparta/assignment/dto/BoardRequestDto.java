@@ -1,4 +1,4 @@
-package com.sparta.assignment.domain;
+package com.sparta.assignment.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

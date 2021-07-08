@@ -2,7 +2,7 @@ package com.sparta.assignment.controller;
 
 import com.sparta.assignment.domain.Board;
 import com.sparta.assignment.repository.BoardRepository;
-import com.sparta.assignment.domain.BoardRequestDto;
+import com.sparta.assignment.dto.BoardRequestDto;
 import com.sparta.assignment.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

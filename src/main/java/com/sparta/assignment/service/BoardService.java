@@ -2,7 +2,7 @@ package com.sparta.assignment.service;
 
 import com.sparta.assignment.domain.Board;
 import com.sparta.assignment.repository.BoardRepository;
-import com.sparta.assignment.domain.BoardRequestDto;
+import com.sparta.assignment.dto.BoardRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
