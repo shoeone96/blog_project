@@ -78,20 +78,27 @@
             border: 1px solid #888;
             width: 30%; /* Could be more or less, depending on screen size */
         }
-        .banner{
+
+        .banner {
             align-content: center;
         }
-        .btnPosting{
+
+        .btnPosting {
             margin-top: 50px;
         }
+
         .jumbotron {
             margin: auto;
             height: 300px;
         }
-        .bannerword{
+
+        .bannerword {
             text-align: center;
             font-size: 80px;
             font-family: 'Jua', sans-serif;
+        }
+        .idInformation{
+            text-align: right;
         }
     </style>
     <script>
@@ -182,12 +189,14 @@
     <p class="lead">
         <button class="btn btn-secondary btn-lg" onclick="location.href='posting.html';">게시글 작성하기</button>
     </p>
-    <div id="header-title-login-user">
-        <span th:text="${username}"></span> 님의
+    <div class="idInformation">
+        <div id="header-title-login-user">
+            <span th:text="${username}"></span> 님의 로그인
+        </div>
+        <a id="logout-text" href="/user/logout">
+            로그아웃
+        </a>
     </div>
-    <a id="logout-text" href="/user/logout">
-        로그아웃
-    </a>
 
 </div>
 <table class="table table-striped width">
